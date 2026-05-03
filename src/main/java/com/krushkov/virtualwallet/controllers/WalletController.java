@@ -5,6 +5,7 @@ import com.krushkov.virtualwallet.helpers.mappers.WalletMapper;
 import com.krushkov.virtualwallet.models.Wallet;
 import com.krushkov.virtualwallet.models.dtos.requests.wallet.WalletCreateRequest;
 import com.krushkov.virtualwallet.models.dtos.requests.wallet.WalletFilterOptions;
+import com.krushkov.virtualwallet.models.dtos.requests.wallet.WalletUpdateRequest;
 import com.krushkov.virtualwallet.models.dtos.responses.api.ApiResponse;
 import com.krushkov.virtualwallet.models.dtos.responses.wallet.WalletLongResponse;
 import com.krushkov.virtualwallet.models.dtos.responses.wallet.WalletShortResponse;
@@ -83,6 +84,15 @@ public class WalletController {
         WalletLongResponse walletLongResponse = walletMapper.toLong(wallet);
 
         return ApiResponseFactory.ok("Wallet created successfully.", walletLongResponse);
+    }
+
+    @PutMapping("/{targetWalletId}")
+    public ResponseEntity<ApiResponse<WalletLongResponse>> update(
+            @Valid @RequestBody WalletUpdateRequest request,
+            @PathVariable Long targetWalletId
+    ) {
+        WalletLongResponse walletLongResponse = walletMapper.toLong(walletService.update(request, targetWalletId));
+        return ApiResponseFactory.ok("Wallet updated successfully.", walletLongResponse);
     }
 
     @PatchMapping("/{targetWalletId}/set-default")

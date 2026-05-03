@@ -79,19 +79,19 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User update(UserUpdateRequest request) {
         Long principalId = PrincipalContext.getId();
-        User existing = getById(principalId);
+        User targetUser = getById(principalId);
 
         UserValidations.validateUsernameNotTaken(userRepository, request.username(), principalId);
         UserValidations.validateEmailNotTaken(userRepository, request.email(), principalId);
         UserValidations.validatePhoneNumberNotTaken(userRepository, request.phoneNumber(), principalId);
 
         if (request.password() != null) {
-            existing.setPassword(passwordEncoder.encode(request.password()));
+            targetUser.setPassword(passwordEncoder.encode(request.password()));
         }
 
-        userMapper.update(existing, request);
+        userMapper.update(targetUser, request);
 
-        return userRepository.save(existing);
+        return userRepository.save(targetUser);
     }
 
     @Override

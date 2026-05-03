@@ -54,6 +54,7 @@ public class CardServiceImpl implements CardService {
         Long principalId = PrincipalContext.getId();
         CardValidations.validateAlreadyExists(cardRepository, principalId, card.getCardSuffix());
         User user = userService.getById(principalId);
+        card.setCardHolder(card.getCardHolder().toUpperCase());
 
         card.setUser(user);
         return cardRepository.save(card);

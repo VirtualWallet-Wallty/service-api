@@ -2,6 +2,7 @@ package com.krushkov.virtualwallet.services.contracts;
 
 import com.krushkov.virtualwallet.models.Wallet;
 import com.krushkov.virtualwallet.models.dtos.requests.wallet.WalletFilterOptions;
+import com.krushkov.virtualwallet.models.dtos.requests.wallet.WalletUpdateRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -25,6 +26,8 @@ public interface WalletService {
     List<Wallet> getAllByUserId(Long targetUserId);
 
     Wallet create(Wallet wallet, String currencyCode);
+
+    Wallet update(WalletUpdateRequest request, Long targetWalletId);
 
     void delete(Long targetWalletId);
 
