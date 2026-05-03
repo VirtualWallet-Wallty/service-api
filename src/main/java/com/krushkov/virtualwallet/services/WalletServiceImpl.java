@@ -97,6 +97,10 @@ public class WalletServiceImpl implements WalletService {
 
         Long principalId = PrincipalContext.getId();
 
+        if (walletRepository.countByUserIdAndIsDeletedFalse(principalId) <= 0) {
+            wallet.setDefault(true);
+        }
+
         WalletValidations.validateMaxWalletCount(walletRepository, principalId);
         WalletValidations.validateNameExists(walletRepository, wallet.getName(), principalId);
 
