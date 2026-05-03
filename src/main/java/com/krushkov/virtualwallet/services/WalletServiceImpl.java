@@ -1,6 +1,7 @@
 package com.krushkov.virtualwallet.services;
 
 import com.krushkov.virtualwallet.exceptions.EntityNotFoundException;
+import com.krushkov.virtualwallet.helpers.mappers.WalletMapper;
 import com.krushkov.virtualwallet.helpers.validations.TransactionValidations;
 import com.krushkov.virtualwallet.helpers.validations.UserValidations;
 import com.krushkov.virtualwallet.helpers.validations.WalletValidations;
@@ -8,6 +9,7 @@ import com.krushkov.virtualwallet.models.Currency;
 import com.krushkov.virtualwallet.models.User;
 import com.krushkov.virtualwallet.models.Wallet;
 import com.krushkov.virtualwallet.models.dtos.requests.wallet.WalletFilterOptions;
+import com.krushkov.virtualwallet.models.dtos.requests.wallet.WalletUpdateRequest;
 import com.krushkov.virtualwallet.repositories.UserRepository;
 import com.krushkov.virtualwallet.repositories.WalletRepository;
 import com.krushkov.virtualwallet.repositories.specifications.WalletSpecifications;
@@ -29,6 +31,7 @@ import java.util.List;
 public class WalletServiceImpl implements WalletService {
 
     private final WalletRepository walletRepository;
+    private final WalletMapper walletMapper;
     private final CurrencyService currencyService;
     private final UserService userService;
     private final UserRepository userRepository;
@@ -104,6 +107,18 @@ public class WalletServiceImpl implements WalletService {
         wallet.setCurrency(currency);
 
         return walletRepository.save(wallet);
+    }
+
+    @Override
+    @Transactional
+    public Wallet update(WalletUpdateRequest request, Long targetWalletId) {
+        UserValidations.validateIsNotAdmin();
+
+        Wallet targetWallet = getById(targetWalletId);
+        walletMapper.update(targetWallet, request);
+
+        walletRepository.save(targetWallet);
+        return targetWallet;
     }
 
     @Override

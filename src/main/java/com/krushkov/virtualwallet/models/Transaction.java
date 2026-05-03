@@ -70,7 +70,7 @@ public class Transaction {
     @JoinColumn(name = "recipient_wallet_id")
     private Wallet recipientWallet;
 
-    @Column(name = "external_reference", unique = true)
+    @Column(name = "external_reference")
     private String externalReference;
 
     @Column(name = "created_at", nullable = false, updatable = false)

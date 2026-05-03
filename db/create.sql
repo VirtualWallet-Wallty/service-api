@@ -136,7 +136,7 @@ CREATE TABLE transactions
     recipient_id            BIGINT         NULL,
     recipient_wallet_id     BIGINT         NULL,
 
-    external_reference      VARCHAR(255)   NULL UNIQUE,
+    external_reference      VARCHAR(255)   NULL,
 
     created_at              TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
 

@@ -17,7 +17,7 @@ public interface TransactionMapper {
     @Mapping(target = "recipientCurrencyCode", source = "transaction.recipientCurrency.code")
     @Mapping(target = "senderWalletId", source = "transaction.senderWallet.id")
     @Mapping(target = "recipientWalletId", source = "transaction.recipientWallet.id")
-    @Mapping(target = "direction", expression = "java(resolveDirection(transaction, currq   1entUserId))")
+    @Mapping(target = "direction", expression = "java(resolveDirection(transaction, currentUserId))")
     TransactionShortResponse toShort(Transaction transaction, Long currentUserId);
 
     @Mapping(target = "direction", expression = "java(resolveDirection(transaction, currentUserId))")
