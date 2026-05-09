@@ -1,119 +1,93 @@
-Developing a secure web application for digital wallet management, enabling seamless user-to-user money transfers and account funding via credit/debit cards
+<div align=center>
+
+# This is the backend API for [VirtualWallet-Wallty](https://github.com/VirtualWallet-Wallty)
+
+</div>
+
+> Requires Java 17+, Gradle, and a running MySQL instance.
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/VirtualWallet-Wallty/service-api
+cd service-api
+```
+
+<br/>
+
+### 2. Set up the database
+
+Run the scripts from the [`db/`](https://github.com/VirtualWallet-Wallty/service-api/tree/main/db) directory in order:
+
+```sql
+-- Create the schema and tables
+source db/create.sql
+
+-- Insert required seed data (currencies, exchange rates, roles, etc.)
+source db/inserts.sql
+```
+
+Or run them directly from the links:
+
+- [`db/create.sql`](https://github.com/VirtualWallet-Wallty/service-api/blob/main/db/create.sql) - creates the database and all tables
+- [`db/inserts.sql`](https://github.com/VirtualWallet-Wallty/service-api/blob/main/db/inserts.sql) - inserts seed data for testing
+
+<br/>
+
+### 3. Configure `application.properties`
+
+In [`src/main/resources/application.properties`](https://github.com/VirtualWallet-Wallty/service-api/blob/main/src/main/resources/application.properties), fill in the commented-out values:
+
+```properties
+spring.application.name=virtual-wallet
+spring.datasource.url=jdbc:mysql://localhost:3306/virtual_wallet
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.username=        # ← your MySQL username
+spring.datasource.password=        # ← your MySQL password
+
+security.jwt.secret=               # ← any long random secret string
+security.jwt.expiration=3600000
+
+exchange.api.base-url=https://v6.exchangerate-api.com/v6
+exchange.api.key=                  # ← your key from exchangerate-api.com
+
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
+spring.web.resources.add-mappings=false
+```
+
+> Get a free ExchangeRate API key at [exchangerate-api.com](https://www.exchangerate-api.com).
+
+<br/>
+
+### 4. Run the application
+
+```bash
+./mvnw spring-boot:run
+```
+
+The API will be available at `http://localhost:8080`.
 
 ---
 
-# STATUS: Currently in process.
+<br/>
 
-# Latest updates:
-```
-Log #11:
-- Removed the list of wallets and cards from UserLongResponse, due to security reasons.
+<div align=center>
 
-- Added an identifier to ExchangeRateRespone.
+## 👤 Contact
 
-- Changed the counterparty property to a direction that indicates whether the money was received or sent.
-```
-```
-Log #10:
-- Update the whole money flow & currency movement.
+🐙 **_[GitHub Profile](https://github.com/todorkrushkov)_**
 
-- Add Exchange rates which are updated by external api (https://app.exchangerate-api.com),
-  with automatic recall on every 24 hours or manual call by admins in the new ExchangeRateController.
-  
-- Wallet Resolution logic now makes it possible to choose the ideal money 
-  flow path even if currency is used.
+💼 **_[LinkedIn Profile](https://www.linkedin.com/in/todor-krushkov-64991433a/)_**
 
-- Transactions now have separate information for sent and received money, 
-  with their currencies and exchange rate.
+✉️ _**<todorkrushkov.1304@gmail.com>**_
 
-- Transactions now can be searched by label as well with their new fields that were added.
-```
-```
-Log #9:
-- Fix api response to be suitasble for android client.
+<br/>
 
-- Add label to transaction models.
+**Developed as a course project @ Technical University of Sofia**
 
-- Update transaction search for the new label field.
- 
-- Add wallet delete endpoind.
+\*Faculty of Computer Systems and Technologies - Computer & Software Engineering\*\*\*
 
-- Update wallet create and delete rules. Wallets count have to be between 1 and 5 now. 
-```
-```
-Log #8:
-- Add CurrencyController and CurrencyService to be able to retrieve currency data from the api.
-```
-```
-Log #7:
-- Fix ApiResponse. Every response from backend now returns a uniform structure. 
-
-- Fix pay and transfer method namings in the controllers.  
-```
-``` 
-Log #6:
-- The project now supports multiple cards and wallets.
-
-- All validations are centralized by type, and all validation messages are stored 
-  in a single place (ValidationMessages).
-
-- Each entity has both short and long (detailed) response.
-
-- Services are now properly separated by responsibility.
-
-- New endpoints were created, and each role now has clearly defined responsibilities.
-
-- The database schema was updated: users, cards, and wallets now include 
-  an isDeleted field for future soft-delete handling. This is currently implemented only for cards.
-
-- Security was improved to better handle authentication and authorization.
-
-- Repositories were enhanced with more useful and specialized queries.
-```
-``` 
-Log #5:
-- Add JWT implementation
-```
-``` 
-Log #4:
-- Fix sender to be nullable.
-
-- Add Global Exception Handler.
-
-- Add ApiErrorResponse DTO.
-```
-``` 
-Log #3:
-- Add pay endpoint to transaction controller.
-
-- Fix search endpoints.
-
-- Remove unused service methods.
-```
-``` 
-Log #2:
-- Add mappers.
-
-- Update service abstraction.
-
-- Fix card information to be more secure.
-```
-``` 
-Log #1:
-- Add all models with their repositories.
-
-- Add basic business logic.
-
-- Add Controllers and test if workflow is correct.
-```
----
-
-For further information, questions, or feedback, feel free to get in touch:
-
-| Name           | Email                        | GitHub                           |
-|----------------|------------------------------|----------------------------------|
-| Todor Krushkov | todorkrushkov.1304@gmail.com | https://github.com/todorkrushkov |
-
----
-
-Built with clean code, security, and scalability in mind.
+</div>

@@ -60,14 +60,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    void getByEmail_throwsWhenMissing() {
-        when(userRepository.findByEmailAndIsDeletedFalse("missing@example.com")).thenReturn(Optional.empty());
-
-        assertThatThrownBy(() -> service.getByEmail("missing@example.com"))
-                .isInstanceOf(EntityNotFoundException.class);
-    }
-
-    @Test
     void create_encodesPasswordAssignsUserRoleAndSaves() {
         User user = user(12L);
         user.setPassword("raw");

@@ -7,9 +7,9 @@ import org.springframework.data.domain.Pageable;
 
 public interface TransactionService {
 
-    Transaction getById(Long targetTransactionId);
-
     Page<Transaction> search(TransactionFilterOptions filters, Pageable pageable);
+
+    Transaction getById(Long targetTransactionId);
 
     Transaction create(Transaction transaction);
 }

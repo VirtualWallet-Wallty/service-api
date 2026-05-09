@@ -1,6 +1,6 @@
 package com.krushkov.virtualwallet.models.dtos.requests.transaction;
 
-import com.krushkov.virtualwallet.helpers.ValidationMessages;
+import com.krushkov.virtualwallet.helpers.ConstantMessages;
 import com.krushkov.virtualwallet.models.enums.TransactionStatus;
 import com.krushkov.virtualwallet.models.enums.TransactionType;
 import jakarta.validation.constraints.AssertTrue;
@@ -34,7 +34,7 @@ public record TransactionFilterOptions(
         LocalDateTime createdFrom,
         LocalDateTime createdTo
 ) {
-    @AssertTrue(message = ValidationMessages.TRANSACTION_CREATE_RANGE_ERROR)
+    @AssertTrue(message = ConstantMessages.TRANSACTION_CREATE_RANGE_ERROR)
     public boolean isValidCreateRange() {
         if (createdFrom == null || createdTo == null) {
             return true;
@@ -42,7 +42,7 @@ public record TransactionFilterOptions(
         return !createdFrom.isAfter(createdTo);
     }
 
-    @AssertTrue(message = ValidationMessages.TRANSACTION_AMOUNT_RANGE_ERROR)
+    @AssertTrue(message = ConstantMessages.TRANSACTION_AMOUNT_RANGE_ERROR)
     public boolean isValidSenderAmountRange() {
         if (minSenderAmount == null || maxSenderAmount == null) {
             return true;
@@ -50,7 +50,7 @@ public record TransactionFilterOptions(
         return minSenderAmount.compareTo(maxSenderAmount) <= 0;
     }
 
-    @AssertTrue(message = ValidationMessages.TRANSACTION_AMOUNT_RANGE_ERROR)
+    @AssertTrue(message = ConstantMessages.TRANSACTION_AMOUNT_RANGE_ERROR)
     public boolean isValidRecipientAmountRange() {
         if (minRecipientAmount == null || maxRecipientAmount == null) {
             return true;

@@ -6,18 +6,18 @@ import java.util.List;
 
 public interface CardService {
 
-    Card getById(Long targetCardId);
-
     List<Card> getAllByUserId(Long targetCardId);
 
     List<Card> getAllMyCards();
 
+    Card getById(Long targetCardId);
+
     Card add(Card card);
+
+    void remove(Long targetCardId);
 
     void activate(Long targetCardId);
 
     void deactivate(Long targetCardId);
-
-    void remove(Long targetCardId);
 
 }

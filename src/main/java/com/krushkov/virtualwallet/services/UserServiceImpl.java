@@ -2,7 +2,7 @@ package com.krushkov.virtualwallet.services;
 
 import com.krushkov.virtualwallet.exceptions.EntityNotFoundException;
 import com.krushkov.virtualwallet.exceptions.InvalidOperationException;
-import com.krushkov.virtualwallet.helpers.ValidationMessages;
+import com.krushkov.virtualwallet.helpers.ConstantMessages;
 import com.krushkov.virtualwallet.helpers.mappers.UserMapper;
 import com.krushkov.virtualwallet.helpers.validations.UserValidations;
 import com.krushkov.virtualwallet.models.Role;
@@ -33,29 +33,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
+    public Page<User> search(UserFilterOptions filters, Pageable pageable) {
+        return userRepository.findAll(UserSpecifications.withFilters(filters), pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public User getById(Long targetUserId) {
         return userRepository.findByIdAndIsDeletedFalse(targetUserId)
                 .orElseThrow(() -> new EntityNotFoundException("User", targetUserId));
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public User getByEmail(String targetEmail) {
-        return userRepository.findByEmailAndIsDeletedFalse(targetEmail)
-                .orElseThrow(() -> new EntityNotFoundException("User", "email", targetEmail));
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public User getByUsername(String targetUsername) {
-        return userRepository.findByUsernameAndIsDeletedFalse(targetUsername)
-                .orElseThrow(() -> new EntityNotFoundException("User", "username", targetUsername));
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Page<User> search(UserFilterOptions filters, Pageable pageable) {
-        return userRepository.findAll(UserSpecifications.withFilters(filters), pageable);
     }
 
     @Override
@@ -101,7 +87,7 @@ public class UserServiceImpl implements UserService {
         User targetUser = getById(targetUserId);
         if (targetUser.isBlocked()) {
             throw new InvalidOperationException(String.format(
-                    ValidationMessages.USER_ALREADY_BLOCKED, targetUser.getUsername()
+                    ConstantMessages.USER_ALREADY_BLOCKED, targetUser.getUsername()
             ));
         }
 
@@ -115,16 +101,10 @@ public class UserServiceImpl implements UserService {
         User targetUser = getById(targetUserId);
         if (!targetUser.isBlocked()) {
             throw new InvalidOperationException(String.format(
-                    ValidationMessages.USER_NOT_BLOCKED, targetUser.getUsername()
+                    ConstantMessages.USER_NOT_BLOCKED, targetUser.getUsername()
             ));
         }
 
         targetUser.setBlocked(false);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public long count() {
-        return userRepository.count();
     }
 }

@@ -1,29 +1,35 @@
 package com.krushkov.virtualwallet.models.dtos.requests.auth;
 
-import com.krushkov.virtualwallet.helpers.ValidationMessages;
+import com.krushkov.virtualwallet.helpers.ConstantMessages;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public record RegisterRequest(
-        @NotBlank(message = ValidationMessages.USERNAME_NOT_NULL_ERROR)
-        @Size(min = 4, max = 32, message = ValidationMessages.USERNAME_LENGTH_ERROR)
+        @Schema(description = "Unique username", example = "johndoe")
+        @NotBlank(message = ConstantMessages.USERNAME_NOT_NULL_ERROR)
+        @Size(min = 4, max = 32, message = ConstantMessages.USERNAME_LENGTH_ERROR)
         String username,
 
-        @NotBlank(message = ValidationMessages.PASSWORD_NOT_NULL_ERROR)
-        @Size(min = 6, max = 128, message = ValidationMessages.PASSWORD_LENGTH_ERROR)
+        @Schema(description = "Account password", example = "secret123")
+        @NotBlank(message = ConstantMessages.PASSWORD_NOT_NULL_ERROR)
+        @Size(min = 6, max = 128, message = ConstantMessages.PASSWORD_LENGTH_ERROR)
         String password,
 
-        @NotBlank(message = ValidationMessages.FIRST_NAME_NOT_NULL_ERROR)
-        @Size(min = 4, max = 50, message = ValidationMessages.FIRST_NAME_LENGTH_ERROR)
+        @Schema(description = "First name", example = "John")
+        @NotBlank(message = ConstantMessages.FIRST_NAME_NOT_NULL_ERROR)
+        @Size(min = 4, max = 50, message = ConstantMessages.FIRST_NAME_LENGTH_ERROR)
         String firstName,
 
-        @NotBlank(message = ValidationMessages.LAST_NAME_NOT_NULL_ERROR)
-        @Size(min = 4, max = 50, message = ValidationMessages.LAST_NAME_LENGTH_ERROR)
+        @Schema(description = "Last name", example = "Doe")
+        @NotBlank(message = ConstantMessages.LAST_NAME_NOT_NULL_ERROR)
+        @Size(min = 4, max = 50, message = ConstantMessages.LAST_NAME_LENGTH_ERROR)
         String lastName,
 
-        @NotBlank(message = ValidationMessages.EMAIL_NOT_NULL_ERROR)
-        @Email(message = ValidationMessages.EMAIL_INVALID_ERROR)
-        @Size(min = 6, max = 255, message = ValidationMessages.EMAIL_LENGTH_ERROR)
+        @Schema(description = "Email address", example = "john.doe@example.com")
+        @NotBlank(message = ConstantMessages.EMAIL_NOT_NULL_ERROR)
+        @Email(message = ConstantMessages.EMAIL_INVALID_ERROR)
+        @Size(min = 6, max = 255, message = ConstantMessages.EMAIL_LENGTH_ERROR)
         String email
 ) {}

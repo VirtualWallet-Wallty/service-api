@@ -1,7 +1,7 @@
 package com.krushkov.virtualwallet.services;
 
 import com.krushkov.virtualwallet.exceptions.InvalidOperationException;
-import com.krushkov.virtualwallet.helpers.ValidationMessages;
+import com.krushkov.virtualwallet.helpers.ConstantMessages;
 import com.krushkov.virtualwallet.models.dtos.responses.auth.UserPrincipalResponse;
 import com.krushkov.virtualwallet.security.auth.PrincipalContext;
 import com.krushkov.virtualwallet.security.auth.UserPrincipal;
@@ -34,7 +34,6 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     public void register(User user) {
         userService.create(user);
-        //ToDo: Email verification
     }
 
     @Override
@@ -42,7 +41,7 @@ public class AuthServiceImpl implements AuthService {
     public UserPrincipalResponse login(LoginRequest request, HttpServletResponse response) {
         if (request.identifier() == null || request.identifier().isBlank()
                 || request.password() == null || request.password().isBlank()) {
-            throw new InvalidOperationException(ValidationMessages.IDENTIFIER_PASSWORD_MISSING_ERROR);
+            throw new InvalidOperationException(ConstantMessages.IDENTIFIER_PASSWORD_MISSING_ERROR);
         }
 
         try {
@@ -65,7 +64,7 @@ public class AuthServiceImpl implements AuthService {
                     userDetails.isBlocked()
             );
         } catch (BadCredentialsException e) {
-            throw new InvalidOperationException(ValidationMessages.IDENTIFIER_PASSWORD_WRONG_ERROR);
+            throw new InvalidOperationException(ConstantMessages.IDENTIFIER_PASSWORD_WRONG_ERROR);
         }
     }
 

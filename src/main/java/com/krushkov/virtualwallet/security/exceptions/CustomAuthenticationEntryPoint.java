@@ -1,13 +1,12 @@
 package com.krushkov.virtualwallet.security.exceptions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.krushkov.virtualwallet.helpers.ValidationMessages;
+import com.krushkov.virtualwallet.helpers.ConstantMessages;
 import com.krushkov.virtualwallet.models.dtos.responses.api.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -28,7 +27,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     ) throws IOException {
         ApiResponse<Void> apiResponse = ApiResponse.error(
                 request.getRequestURI(),
-                ValidationMessages.AUTHENTICATION_MISSING_ERROR,
+                ConstantMessages.AUTHENTICATION_MISSING_ERROR,
                 null
         );
 

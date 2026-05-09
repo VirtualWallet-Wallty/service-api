@@ -25,16 +25,6 @@ public class CardServiceImpl implements CardService {
 
     @Override
     @Transactional(readOnly = true)
-    public Card getById(Long targetCardId) {
-        if (PrincipalContext.isAdmin()) {
-            return findCard(targetCardId);
-        }
-
-        return findCardOwnedBy(targetCardId);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public List<Card> getAllByUserId(Long targetUserId) {
         UserValidations.validateIsAdmin();
         return cardRepository.findAllByUserIdAndIsDeletedFalse(targetUserId);
@@ -48,6 +38,16 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Card getById(Long targetCardId) {
+        if (PrincipalContext.isAdmin()) {
+            return findCard(targetCardId);
+        }
+
+        return findCardOwnedBy(targetCardId);
+    }
+
+    @Override
     @Transactional
     public Card add(Card card) {
         UserValidations.validateIsNotAdmin();
@@ -58,6 +58,14 @@ public class CardServiceImpl implements CardService {
 
         card.setUser(user);
         return cardRepository.save(card);
+    }
+
+    @Override
+    @Transactional
+    public void remove(Long targetCardId) {
+        UserValidations.validateIsNotAdmin();
+        Card targetCard = findCardOwnedBy(targetCardId);
+        targetCard.setDeleted(true);
     }
 
     @Override
@@ -82,14 +90,6 @@ public class CardServiceImpl implements CardService {
             Card targetCard = getById(targetCardId);
             userDeactivate(targetCard);
         }
-    }
-
-    @Override
-    @Transactional
-    public void remove(Long targetCardId) {
-        UserValidations.validateIsNotAdmin();
-        Card targetCard = findCardOwnedBy(targetCardId);
-        targetCard.setDeleted(true);
     }
 
     private Card findCardOwnedBy(Long targetCardId) {

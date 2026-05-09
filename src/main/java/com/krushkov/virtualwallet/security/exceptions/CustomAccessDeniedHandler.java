@@ -1,7 +1,7 @@
 package com.krushkov.virtualwallet.security.exceptions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.krushkov.virtualwallet.helpers.ValidationMessages;
+import com.krushkov.virtualwallet.helpers.ConstantMessages;
 import com.krushkov.virtualwallet.models.dtos.responses.api.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,7 +27,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     ) throws IOException {
         ApiResponse<Void> apiResponse = ApiResponse.error(
                 request.getRequestURI(),
-                ValidationMessages.API_ACCESS_ERROR,
+                ConstantMessages.API_ACCESS_ERROR,
                 null
         );
 

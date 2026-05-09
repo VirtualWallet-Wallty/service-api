@@ -13,17 +13,17 @@ public interface WalletService {
 
     Page<Wallet> search(WalletFilterOptions filters, Pageable pageable);
 
+    List<Wallet> getAllByUserId(Long targetUserId);
+
+    List<Wallet> getMyAll();
+
     Wallet getById(Long targetWalletId);
 
     Wallet getByIdAndUserId(Long targetWalletId, Long targetUserId);
 
-    Wallet getDefault(Long targetUserId);
-
     Wallet getMyDefault();
 
-    List<Wallet> getMyAll();
-
-    List<Wallet> getAllByUserId(Long targetUserId);
+    Wallet getDefault(Long targetUserId);
 
     Wallet create(Wallet wallet, String currencyCode);
 

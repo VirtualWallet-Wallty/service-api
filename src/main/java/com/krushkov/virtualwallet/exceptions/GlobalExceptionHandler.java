@@ -1,5 +1,6 @@
 package com.krushkov.virtualwallet.exceptions;
 
+import com.krushkov.virtualwallet.helpers.ConstantMessages;
 import com.krushkov.virtualwallet.models.dtos.responses.api.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -47,7 +48,7 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.UNPROCESSABLE_ENTITY)
                 .body(ApiResponse.error(
                 request.getRequestURI(),
-                "Validation failed.",
+                ConstantMessages.VALIDATION_ERROR,
                 errors));
     }
 
@@ -61,18 +62,18 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ApiResponse<Void>> handleBadCredentials(HttpServletRequest request) {
-        return error(HttpStatus.UNAUTHORIZED, request, "Wrong username or password.");
+        return error(HttpStatus.UNAUTHORIZED, request, ConstantMessages.WRONG_CREDENTIALS_ERROR);
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<ApiResponse<Void>> handleWrongUri(HttpServletRequest request) {
-        return error(HttpStatus.NOT_FOUND, request, "Endpoint not found.");
+        return error(HttpStatus.NOT_FOUND, request, ConstantMessages.WRONG_ENDPOINT_ERROR);
     }
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<ApiResponse<Void>> handleUnexpected(HttpServletRequest request) {
-//        return error(HttpStatus.INTERNAL_SERVER_ERROR, request, "Unexpected server error.");
-//    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse<Void>> handleUnexpected(HttpServletRequest request) {
+        return error(HttpStatus.INTERNAL_SERVER_ERROR, request, ConstantMessages.INTERNAL_SERVER_ERROR);
+    }
 
     private ResponseEntity<ApiResponse<Void>> error(HttpStatus status, HttpServletRequest request, String message) {
         return ResponseEntity

@@ -3,7 +3,7 @@ package com.krushkov.virtualwallet.helpers.validations;
 import com.krushkov.virtualwallet.exceptions.EntityDuplicateException;
 import com.krushkov.virtualwallet.exceptions.EntityNotFoundException;
 import com.krushkov.virtualwallet.exceptions.InvalidOperationException;
-import com.krushkov.virtualwallet.helpers.ValidationMessages;
+import com.krushkov.virtualwallet.helpers.ConstantMessages;
 import com.krushkov.virtualwallet.models.User;
 import com.krushkov.virtualwallet.models.enums.RoleType;
 import com.krushkov.virtualwallet.repositories.UserRepository;
@@ -56,31 +56,31 @@ public final class UserValidations {
 
     public static void validateNotBlocked() {
         if (PrincipalContext.isBlocked()) {
-            throw new InvalidOperationException(ValidationMessages.USER_BLOCKED_ERROR);
+            throw new InvalidOperationException(ConstantMessages.USER_BLOCKED_ERROR);
         }
     }
 
     public static void validateRecipientNotBlocked(UserRepository userRepository, Long userId) {
         if (getUser(userRepository, userId).isBlocked()) {
-            throw new InvalidOperationException(ValidationMessages.RECIPIENT_BLOCKED_ERROR);
+            throw new InvalidOperationException(ConstantMessages.RECIPIENT_BLOCKED_ERROR);
         }
     }
 
     public static void validateRecipientNotAdmin(UserRepository userRepository, Long userId) {
         if (getUser(userRepository, userId).getRole().getName().equals(RoleType.ADMIN)) {
-            throw new InvalidOperationException(ValidationMessages.RECIPIENT_NOT_ADMIN_ERROR);
+            throw new InvalidOperationException(ConstantMessages.RECIPIENT_NOT_ADMIN_ERROR);
         }
     }
 
     public static void validateIsAdmin() {
         if (!PrincipalContext.isAdmin()) {
-            throw new InvalidOperationException(ValidationMessages.ADMIN_ONLY_ERROR);
+            throw new InvalidOperationException(ConstantMessages.ADMIN_ONLY_ERROR);
         }
     }
 
     public static void validateIsNotAdmin() {
         if (PrincipalContext.isAdmin()) {
-            throw new InvalidOperationException(ValidationMessages.USER_ONLY_ERROR);
+            throw new InvalidOperationException(ConstantMessages.USER_ONLY_ERROR);
         }
     }
 

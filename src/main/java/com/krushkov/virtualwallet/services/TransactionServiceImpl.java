@@ -23,22 +23,22 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional(readOnly = true)
-    public Transaction getById(Long transactionId) {
-        if (PrincipalContext.isAdmin()) {
-            return findTransaction(transactionId);
-        }
-
-        return findTransactionOwnedBy(transactionId);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public Page<Transaction> search(TransactionFilterOptions filters, Pageable pageable) {
         if (PrincipalContext.isAdmin()) {
             return adminSearch(filters, pageable);
         }
 
         return userSearch(filters.withoutUserId(), pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Transaction getById(Long transactionId) {
+        if (PrincipalContext.isAdmin()) {
+            return findTransaction(transactionId);
+        }
+
+        return findTransactionOwnedBy(transactionId);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.krushkov.virtualwallet.security.jwt;
 
-import com.krushkov.virtualwallet.helpers.ValidationMessages;
+import com.krushkov.virtualwallet.helpers.ConstantMessages;
 import com.krushkov.virtualwallet.security.auth.UserPrincipal;
 import com.krushkov.virtualwallet.security.auth.UserPrincipalService;
 import jakarta.servlet.FilterChain;
@@ -52,7 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         } catch (Exception e) {
             SecurityContextHolder.clearContext();
-            logger.warn(ValidationMessages.INVALID_TOKEN_ERROR + e.getMessage());
+            logger.warn(ConstantMessages.INVALID_TOKEN_ERROR + e.getMessage());
         }
         filterChain.doFilter(request, response);
     }

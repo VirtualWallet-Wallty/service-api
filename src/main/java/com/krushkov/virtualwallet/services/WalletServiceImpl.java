@@ -45,6 +45,20 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<Wallet> getAllByUserId(Long userId) {
+        UserValidations.validateIsAdmin();
+        return walletRepository.findAllByUserIdAndIsDeletedFalse(userId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Wallet> getMyAll() {
+        UserValidations.validateIsNotAdmin();
+        return walletRepository.findAllByUserIdAndIsDeletedFalse(PrincipalContext.getId());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Wallet getById(Long targetWalletId) {
         if (PrincipalContext.isAdmin()) {
             return findWallet(targetWalletId);
@@ -62,13 +76,6 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     @Transactional(readOnly = true)
-    public Wallet getDefault(Long userId) {
-        return walletRepository.findByUserIdAndIsDefaultTrueAndIsDeletedFalse(userId)
-                .orElseThrow(() -> new EntityNotFoundException("Wallet", "default", "user id = " + userId));
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public Wallet getMyDefault() {
         UserValidations.validateIsNotAdmin();
         Long principalId = PrincipalContext.getId();
@@ -78,16 +85,9 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Wallet> getMyAll() {
-        UserValidations.validateIsNotAdmin();
-        return walletRepository.findAllByUserIdAndIsDeletedFalse(PrincipalContext.getId());
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Wallet> getAllByUserId(Long userId) {
-        UserValidations.validateIsAdmin();
-        return walletRepository.findAllByUserIdAndIsDeletedFalse(userId);
+    public Wallet getDefault(Long userId) {
+        return walletRepository.findByUserIdAndIsDefaultTrueAndIsDeletedFalse(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Wallet", "default", "user id = " + userId));
     }
 
     @Override

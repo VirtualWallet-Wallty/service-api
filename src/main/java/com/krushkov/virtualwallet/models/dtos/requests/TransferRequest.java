@@ -1,27 +1,33 @@
 package com.krushkov.virtualwallet.models.dtos.requests;
 
-import com.krushkov.virtualwallet.helpers.ValidationMessages;
+import com.krushkov.virtualwallet.helpers.ConstantMessages;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
 public record TransferRequest(
 
-        @DecimalMin(value = "0.01", inclusive = true, message = ValidationMessages.AMOUNT_LENGTH_ERROR)
+        @Schema(description = "Transfer amount", example = "200.00")
+        @DecimalMin(value = "0.01", inclusive = true, message = ConstantMessages.AMOUNT_LENGTH_ERROR)
         @Digits(integer = 15, fraction = 2)
-        @NotNull(message = ValidationMessages.AMOUNT_NOT_NULL_ERROR)
+        @NotNull(message = ConstantMessages.AMOUNT_NOT_NULL_ERROR)
         BigDecimal amount,
 
-        @Size(min = 3, max = 3, message = ValidationMessages.CURRENCY_CODE_LENGTH_ERROR)
-        @NotBlank(message = ValidationMessages.CURRENCY_CODE_NOT_NULL_ERROR)
+        @Schema(description = "3-letter ISO 4217 currency code", example = "EUR")
+        @Size(min = 3, max = 3, message = ConstantMessages.CURRENCY_CODE_LENGTH_ERROR)
+        @NotBlank(message = ConstantMessages.CURRENCY_CODE_NOT_NULL_ERROR)
         String currencyCode,
 
-        @NotNull(message = ValidationMessages.RECIPIENT_ID_NOT_NULL_ERROR)
+        @Schema(description = "Recipient user ID", example = "5")
+        @NotNull(message = ConstantMessages.RECIPIENT_ID_NOT_NULL_ERROR)
         Long recipientId,
 
-        @Positive(message = ValidationMessages.WALLET_ID_LENGTH_ERROR)
+        @Schema(description = "Sender wallet ID (null = default wallet)", example = "1")
+        @Positive(message = ConstantMessages.WALLET_ID_LENGTH_ERROR)
         Long sourceWalletId,
 
-        @Positive(message = ValidationMessages.WALLET_ID_LENGTH_ERROR)
+        @Schema(description = "Recipient wallet ID (null = default wallet)", example = "3")
+        @Positive(message = ConstantMessages.WALLET_ID_LENGTH_ERROR)
         Long targetWalletId
 ) {}

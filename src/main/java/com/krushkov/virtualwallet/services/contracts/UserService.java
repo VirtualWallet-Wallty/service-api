@@ -8,13 +8,9 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
-    User getById(Long targetUserId);
-
-    User getByUsername(String targetUsername);
-
-    User getByEmail(String targetEmail);
-
     Page<User> search(UserFilterOptions filters, Pageable pageable);
+
+    User getById(Long targetUserId);
 
     User create(User user);
 
@@ -24,5 +20,4 @@ public interface UserService {
 
     void unblock(Long targetUserId);
 
-    long count();
 }

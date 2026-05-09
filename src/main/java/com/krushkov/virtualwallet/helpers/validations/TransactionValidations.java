@@ -1,7 +1,7 @@
 package com.krushkov.virtualwallet.helpers.validations;
 
 import com.krushkov.virtualwallet.exceptions.InvalidOperationException;
-import com.krushkov.virtualwallet.helpers.ValidationMessages;
+import com.krushkov.virtualwallet.helpers.ConstantMessages;
 import com.krushkov.virtualwallet.models.Wallet;
 import com.krushkov.virtualwallet.models.dtos.requests.transaction.TransactionFilterOptions;
 
@@ -14,19 +14,19 @@ public final class TransactionValidations {
 
     public static void validateSameCurrency(Wallet senderWallet, Wallet recipientWallet) {
         if (!senderWallet.getCurrency().equals(recipientWallet.getCurrency())) {
-            throw new InvalidOperationException(ValidationMessages.WRONG_CURRENCY_ERROR);
+            throw new InvalidOperationException(ConstantMessages.WRONG_CURRENCY_ERROR);
         }
     }
 
     public static void validateAmount(BigDecimal amount) {
         if (amount == null || amount.signum() <= 0) {
-            throw new InvalidOperationException(ValidationMessages.POSITIVE_AMOUNT_ERROR);
+            throw new InvalidOperationException(ConstantMessages.POSITIVE_AMOUNT_ERROR);
         }
     }
 
     public static void validateSufficientFunds(Wallet wallet, BigDecimal amount) {
         if (wallet.getBalance().compareTo(amount) < 0) {
-            throw new InvalidOperationException(ValidationMessages.INSUFFICIENT_FUNDS_ERROR);
+            throw new InvalidOperationException(ConstantMessages.INSUFFICIENT_FUNDS_ERROR);
         }
     }
 

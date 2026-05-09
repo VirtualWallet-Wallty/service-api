@@ -1,7 +1,7 @@
 package com.krushkov.virtualwallet.security.auth;
 
 import com.krushkov.virtualwallet.exceptions.AuthenticationFailureException;
-import com.krushkov.virtualwallet.helpers.ValidationMessages;
+import com.krushkov.virtualwallet.helpers.ConstantMessages;
 import com.krushkov.virtualwallet.models.enums.RoleType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,7 +35,7 @@ public final class PrincipalContext {
                 || "anonymousUser".equals(auth.getPrincipal())
                 || !(auth.getPrincipal() instanceof UserPrincipal principal)
         ) {
-            throw new AuthenticationFailureException(ValidationMessages.AUTHENTICATION_MISSING_ERROR);
+            throw new AuthenticationFailureException(ConstantMessages.AUTHENTICATION_MISSING_ERROR);
         }
 
         return principal;
