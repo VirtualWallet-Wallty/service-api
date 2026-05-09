@@ -88,6 +88,6 @@ The API will be available at `http://localhost:8080`.
 
 **Developed as a course project @ Technical University of Sofia**
 
-\*Faculty of Computer Systems and Technologies - Computer & Software Engineering\*\*\*
+*Faculty of Computer Systems and Technologies - Computer & Software Engineering*
 
 </div>
